@@ -17,6 +17,13 @@ export class RoomsService {
     return result;
   }
 
+  public MatchRoombyCodeAndId(roomCode: string, roomId: string): boolean {
+    const room = this.rooms.find(
+      (room) => room.code === roomCode && room.id === roomId,
+    );
+    return room !== undefined;
+  }
+
   public createRoom(): Room {
     this.roomID++;
     const room = new Room(this.roomID.toString(), this.getRandomRoomCode());
@@ -24,12 +31,21 @@ export class RoomsService {
     return room;
   }
 
-  public joinRoom(roomCode: string, user: User): boolean {
+  public joinRoomByCode(roomCode: string, user: User): string | undefined {
     const room = this.rooms.find((room) => room.code === roomCode);
     if (!room) {
-      return false;
+      return undefined;
     }
     room.users.push(user);
-    return true;
+    return room.id;
+  }
+
+  public joinRoomById(roomId: string, user: User): string | undefined {
+    const room = this.rooms.find((room) => room.id === roomId);
+    if (!room) {
+      return undefined;
+    }
+    room.users.push(user);
+    return room.id;
   }
 }

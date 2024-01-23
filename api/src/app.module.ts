@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
+import { APP_PIPE } from '@nestjs/core';
+import { ZodValidationPipe } from 'nestjs-zod';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { EventsModule } from './events/events.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { UsersModule } from './users/users.module';
-import { APP_PIPE } from '@nestjs/core';
-import { ZodValidationPipe } from 'nestjs-zod';
 
 @Module({
-  imports: [AuthModule, UsersModule, RoomsModule],
+  imports: [AuthModule, UsersModule, RoomsModule, EventsModule],
   controllers: [AppController],
   providers: [
     AppService,
